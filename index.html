@@ -16,10 +16,29 @@
     <link rel="stylesheet" href="./assets/style.css" />
 
     <!--Importation de Vue-->
+    <script src="http://localhost:8098"></script>
+    <script src="https://unpkg.com/vue@3.5.12/dist/vue.global.js"></script>
   </head>
   <body>
     <!--Point d'entrée de l'app Vue-->
-    <h1 style="color: green">You are READY for the workshop ;)</h1>
+    <div id="app">
+    <a :href="link"><h1>{{ title }}</h1></a>
+    <p>{{ description }}</p>
+
+    <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
+
+    <!-- v-on:click = @click -->
+    <button 
+      v-on:click="addToCart" 
+      :style="styles.roundButton" 
+      :disabled="stock <= 0"
+      :class="{ disabledButton: stock <= 0 }"
+    >
+      Ajouter au panier
+    </button>
+    <button @click="removeFromCart" :style="styles.roundButton">Retirer du panier</button>
+
+    <div :class="[cart > 0 ? 'cartFilled' : '']">Panier({{ cart }})</div>
 
     <!--Bootstrap-->
     <script
@@ -35,5 +54,10 @@
 
     <!--Notre JS contenant notre app Vue-->
     <script src="./main.js"></script>
+    <script src="./components/ProductDetails.js"></script>
+    <script src="./components/ProductDisplay.js"></script>
+    <script>
+      const mountedApp = app.mount('#app');
+    </script>
   </body>
 </html>
