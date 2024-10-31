@@ -5,27 +5,18 @@ const app = Vue.createApp({
         brand: 'Nespresso',
         description: 'Commandez vos capsules de café en ligne',
         link: 'https://www.nespresso.com/fr/fr/',
-        cart: 0,
-        styles: {
-            roundButton: {
-              borderRadius: '20px',
-              padding: '10px',
-              backgroundColor: 'rgb(0, 114, 180)',
-              color: 'white',
-              cursor: 'pointer'
-            }
-        },
+        cart: [],
       };
     },
     methods: {
-        addToCart: function () {
-          this.cart += 1;
+        addToCart(id) {
+            this.cart.push(id);
         },
-        removeFromCart: function () {
-          if (this.cart > 0) {
-            this.cart -= 1;
-          }
-        },
+        removeFromCart() {
+            if (this.cart.length > 0) {
+                this.cart.pop();
+            }
+        }
     },
     computed: {
         title() {

@@ -5,6 +5,10 @@ app.component('product-display', {
             required: true
         }
     },
+    emits: [
+        'add-to-cart', 
+        'remove-from-cart',
+    ],
     template:
     /*html*/
     `
@@ -30,6 +34,16 @@ app.component('product-display', {
         <img height="50" alt="carouselImage.text" :src="carouselImage.image" />
       </span>
     </div>
+    <!-- v-on:click = @click -->
+    <button 
+      v-on:click="addToCart" 
+      :style="styles.roundButton" 
+      :disabled="stock <= 0"
+      :class="{ disabledButton: stock <= 0 }"
+    >
+      Ajouter au panier
+    </button>
+    <button @click="removeFromCart" :style="styles.roundButton">Retirer du panier</button>
     `,
     data() {
       return {
@@ -70,6 +84,15 @@ app.component('product-display', {
               image: './assets/images/colombia_paquet.png',
             }
           ],
+        styles: {
+            roundButton: {
+              borderRadius: '20px',
+              padding: '10px',
+              backgroundColor: 'rgb(0, 114, 180)',
+              color: 'white',
+              cursor: 'pointer'
+            }
+        },
       }
     },
     methods: {
@@ -78,6 +101,12 @@ app.component('product-display', {
         },
         updateSelectedImage: function (index) {
             this.selectedImage = index;
+        },
+        addToCart: function () {
+            this.$emit('add-to-cart', this.carouselImages[this.selectedImage].id);
+        },
+        removeFromCart: function () {
+            this.$emit('remove-from-cart');
         },
     },
     computed: {

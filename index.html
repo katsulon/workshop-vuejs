@@ -22,23 +22,21 @@
   <body>
     <!--Point d'entrée de l'app Vue-->
     <div id="app">
-    <a :href="link"><h1>{{ title }}</h1></a>
-    <p>{{ description }}</p>
+      <div class="container">
+        <div class="row">
+          <div class="col-8">
+            <a :href="link"><h1>{{ title }}</h1></a>
+            <p>{{ description }}</p>
+          </div>
 
-    <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
+          <div class="col-12">
+            <product-display :premium="premium" @add-to-cart="addToCart" @remove-from-cart="removeFromCart"></product-display>
+          </div>
 
-    <!-- v-on:click = @click -->
-    <button 
-      v-on:click="addToCart" 
-      :style="styles.roundButton" 
-      :disabled="stock <= 0"
-      :class="{ disabledButton: stock <= 0 }"
-    >
-      Ajouter au panier
-    </button>
-    <button @click="removeFromCart" :style="styles.roundButton">Retirer du panier</button>
-
-    <div :class="[cart > 0 ? 'cartFilled' : '']">Panier({{ cart }})</div>
+          <div class="col-4" :class="[cart.length > 0 ? 'cartFilled' : '']">Panier({{ cart.length }})</div>
+        </div>
+      </div>
+    </div>
 
     <!--Bootstrap-->
     <script
